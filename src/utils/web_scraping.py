@@ -69,4 +69,21 @@ class url_scraper:
                      'main_prizes':main_prizes,
                      'other_prizes':other_prizes})
             else:
-                print(f'No data available for id: {id}')    
+                print(f'No data available for id: {id}')
+                
+    def save_to_csv(self, filepath='scraped_data.csv'):
+        """
+        Saves the scraped data to a csv file
+        
+        Parameters:
+        filename(str): The name of the CSV file to save the data
+        """
+        
+        try:
+            #Convert the data to a DataFrame
+            df = pd.DataFrame(self.data)
+            #Save DataFrame to a CSV ile
+            df.to_csv(filepath, index=False)
+            print(f'Data succesfully saved to {filepath}')
+        except Exception as e:
+            print(f'Error saving data to CSV: {e}')
