@@ -4,23 +4,24 @@ import pandas as pd
 import re
 
 class url_scraper:
-    def __init__(self, url):
+    def __init__(self):
         """
         Initializes the URLScraper class.
         
         Parameters:
         url (str): The URL to scrape.
         """
-        self.url = url
+        self.url = ''
         self.html_content = ""
         self.data = []
         self.response = requests.get(url)
         self.soup = BeautifulSoup(self.response.content, 'html.parser')
         
-    def scrape_data(self, tag:str, main_class:str, other_class:str = None, main_class_pattern:str=None, other_class_pattern:str=None):
+    def scrape_data(self, url:str, tag:str, main_class:str, other_class:str = None, main_class_pattern:str=None, other_class_pattern:str=None):
         "Extracts de text from the given tag, main_class, and other_class based on a regular expression pattern."
         try:
             #Extracting main class data.
+            self.url = url
             tag_content = self.soup.find(tag, class_=main_class) #Gets the info from the main class
             if tag_content:
                 main_class_text = tag_content.get_text().strip()
