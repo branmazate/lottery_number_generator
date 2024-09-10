@@ -55,8 +55,13 @@ class url_scraper:
                     
         except Exception as e:
             print(f'Error in extracting data {e}')
-                
-        
+            
+    def scrape_data_from_range(self, url:str, url_pattern:str, start:int,end:int,tag:str,main_class:str, other_class:str = None, main_class_pattern:str=None, other_class_pattern:str=None):
+        #TODO Add error handling for the case when it finds no elements or invalid elements from some values on the range.
+        for id in range(start, end+1):
+            url = f'{url}{url_pattern}{id}'
+            self.scrape_data(url,tag=tag,main_class=main_class,other_class=other_class,main_class_pattern=main_class_pattern,other_class_pattern=other_class_pattern)
+            
     # # Extract winner prizes from the HTML
     # def extract_winner_numbers(self, start_id, end_id):
     #     for id in range(start_id, end_id+1):
