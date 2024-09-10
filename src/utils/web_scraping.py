@@ -17,9 +17,14 @@ class url_scraper:
         self.data = []
         self.response = requests.get(url)
         self.soup = BeautifulSoup(self.response.content, 'html.parser')
+        #TODO Add a function to get the html content of various url obtained from a pattern
         
     def scrape_data(self, url:str, tag:str, main_class:str, other_class:str = None, main_class_pattern:str=None, other_class_pattern:str=None):
         "Extracts de text from the given tag, main_class, and other_class based on a regular expression pattern."
+        #TODO Add error handling for the case when the tag is not found.
+        #TODO Add error handling for the case when the main_class is not found.
+        #TODO Add error handling for the case when the other_class is not found.
+        #TODO Add html content to the data obtained
         try:
             #Extracting main class data.
             self.url = url
