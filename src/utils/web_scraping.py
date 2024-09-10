@@ -15,8 +15,6 @@ class url_scraper:
         self.main_html_content = ""
         self.secondary_html_content = ""
         self.data = []
-        self.response = requests.get(url)
-        self.soup = BeautifulSoup(self.response.content, 'html.parser')
         #TODO Add a function to get the html content of various url obtained from a pattern
         
     def scrape_data(self, url:str, tag:str, main_class:str, other_class:str = None, main_class_pattern:str=None, other_class_pattern:str=None):
@@ -28,6 +26,8 @@ class url_scraper:
         try:
             #Extracting main class data.
             self.url = url
+            self.response = requests.get(self.url)
+            self.soup = BeautifulSoup(self.response.content, 'html.parser')
             tag_content = self.soup.find(tag, class_=main_class) #Gets the info from the main class
             if tag_content:
                 main_class_text = tag_content.get_text().strip()
