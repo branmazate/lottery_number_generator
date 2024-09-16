@@ -15,9 +15,8 @@ class url_scraper:
         self.main_html_content = ""
         self.secondary_html_content = ""
         self.data = []
-        #TODO Add a function to get the html content of various url obtained from a pattern
         
-    def scrape_data(self, url:str, tag:str, main_class:str, other_class:str = None, main_class_pattern:str=None, other_class_pattern:str=None):
+    def scrape_data(self, url:str, tag:str, main_class:str, data:dict, other_class:str = None, main_class_pattern:str=None, other_class_pattern:str=None):
         "Extracts de text from the given tag, main_class, and other_class based on a regular expression pattern."
         #TODO Add error handling for the case when the tag is not found.
         #TODO Add error handling for the case when the main_class is not found.
@@ -28,6 +27,7 @@ class url_scraper:
             self.url = url
             self.response = requests.get(self.url)
             self.soup = BeautifulSoup(self.response.content, 'html.parser')
+            self.data = data
             tag_content = self.soup.find(tag, class_=main_class) #Gets the info from the main class
             if tag_content:
                 main_class_text = tag_content.get_text().strip()
@@ -61,27 +61,8 @@ class url_scraper:
         for id in range(start, end+1):
             url = f'{url}{url_pattern}{id}'
             self.scrape_data(url,tag=tag,main_class=main_class,other_class=other_class,main_class_pattern=main_class_pattern,other_class_pattern=other_class_pattern)
-            
-    # # Extract winner prizes from the HTML
-    # def extract_winner_numbers(self, start_id, end_id):
-    #     for id in range(start_id, end_id+1):
-    #         url = f'{self.url}?id={id}'
-    #         response = requests.get(url)
-    #         if response.status_code ==200:
-    #             html_content =  response.text #Gets raw HTML content
-    #             print(f'HTML content succesfully extracted')
-    #         else:
-    #             raise Exception('Failed to retrieve the page. Status code: {response.status_code}')
-    #         main_prizes, other_prizes = self.scrape_data(main_prize_class = "col-12 text-center", other_prize_classes = "col-xs-12 col-sm-12 col-md-4 col-lg-4 text-justify")
-            
-    #         if main_prizes and other_prizes:
-    #             self.data.append(
-    #                 {'url':url,
-    #                  'main_prizes':main_prizes,
-    #                  'other_prizes':other_prizes})
-    #         else:
-    #             print(f'No data available for id: {id}')
-                
+    
+      
     # def save_to_csv(self, filepath='scraped_data.csv'):
     #     """
     #     Saves the scraped data to a csv file
